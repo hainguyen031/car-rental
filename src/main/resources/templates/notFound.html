@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="/commons/layout :: header_nav_admin"></header>
+<div class="container-fluid row">
+    <div class="py-2 text-center mx-auto">
+        <h1 class="py-1 text-warning"> Not Found</h1>
+        <hr class="" style="margin:auto;width:50%">
+        <br>
+        <br>
+        <p>
+            Something's wrong, your request can not handle at this time.</p>
+        <p>
+            Please try again later!
+        </p>
+    </div>
+</div>
+<footer th:replace="/commons/layout :: footer"></footer>
+</body>
+</html>

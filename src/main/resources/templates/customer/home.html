@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/commons/layout :: head">
+</head>
+<body>
+<header th:replace="/commons/layout :: header_nav_admin"></header>
+
+<!-- hero section start  -->
+<section id="hero" class=" position-relative overflow-hidden">
+    <div class="pattern-overlay pattern-right position-absolute">
+        <img src="/images/hero-pattern-right.png" alt="pattern">
+    </div>
+    <div class="pattern-overlay pattern-left position-absolute">
+        <img src="/images/hero-pattern-left.png" alt="pattern">
+    </div>
+    <div class="hero-content container text-center">
+        <div class="row">
+            <div class="detail mb-4">
+                <h1 class="">Find your <span class="text-primary"> rental car </span></h1>
+                <p class="hero-paragraph">We have many best rental car collections.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- search section start  -->
+<section id="search">
+    <div class="container search-block p-5">
+        <form class="row" id="search-form">
+            <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <label for="seat" class="label-style text-capitalize form-label">Car type</label>
+                <div class="input-group date ">
+
+                    <select class="form-select" id="seat" name="carType">
+                        <option value="4">4 seats</option>
+                        <option value="7">7 seats</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <label for="location" class="label-style text-capitalize form-label">Picking up location</label>
+                <div class="input-group date">
+
+                    <select class="form-select" id="location" name="carLocation">
+                        <option value="Ha Noi">Ha Noi</option>
+                        <option value="Da Nang">Da Nang</option>
+                        <option value="Ho Chi Minh">Ho Chi Minh</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <label for="pick-up-date" class="label-style text-capitalize form-label">Picking up date</label>
+                <div class="input-group date" id="datepicker1">
+                    <input type="text" class="form-control p-3" id="pick-up-date" name="pick-up-date" required/>
+                    <span class="input-group-append">
+                        <span class="search-icon-position position-absolute p-3">
+                        <iconify-icon class="search-icons" icon="solar:calendar-broken"></iconify-icon>
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <label for="return-date" class="label-style text-capitalize form-label">Returning date</label>
+                <div class="input-group date" id="datepicker2">
+                    <input type="text" class="form-control p-3" id="return-date" name="return-date" required/>
+
+                    <span class="input-group-append">
+              <span class="search-icon-position position-absolute p-3">
+                <iconify-icon class="search-icons" icon="solar:calendar-broken"></iconify-icon>
+              </span>
+            </span>
+                </div>
+            </div>
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-primary" type="submit">Find your car</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- rental section start  -->
+<section id="rental" class="position-relative">
+    <div class="container my-5 py-5">
+        <h2 class="text-center my-5">cars for <span class="text-primary"> rental </span></h2>
+
+        <div class="row justify-content-center mb-3" id="search-result">
+            <div class="col-md-4 col-lg-3 mb-3 mb-md-0" th:each="car, countStat : ${carDTOPage}">
+                <div class="card text-black" style="background-color: #f5f4f4; border-radius: 5%; margin-top: 15px">
+                    <img th:src="${car.url}" class="card-img-top" alt="..."
+                         style="width: 100%; height: 17rem; border-radius: 5%">
+                    <div class="card-body p-4">
+                        <h4 class="card-title">
+                            <a th:data-bs-toggle="modal" th:data-bs-target="'#carDetailModal' + ${countStat.count}">
+                                [[${car.brand}]] [[${car.model}]]
+                            </a>
+                        </h4>
+                        <div th:include="customer/modal :: carDetailModal(${car}, ${countStat.count})"></div>
+                        <div class="card-text ">
+                            <ul class="d-flex list-unstyled">
+                                <li class="rental-list"><img src="/images/dot.png" class="px-3" alt="#"></li>
+                                <li class="rental-list flex-fill"><span th:text="${car.seat}"></span> Seats</li>
+                                <li class="rental-list"><img src="/images/dot.png" class="px-3" alt="#"></li>
+                                <li class="rental-list flex-fill"><span th:text="${car.carLocation}"></span></li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <h3 class="pt-2" style="font-size: 1.5rem">
+                                <span class="rental-price" th:text="${car.formatRentPrice()} + ' VND/Day'"></span>
+                            </h3>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    th:data-bs-target="'#carRentModal' + ${countStat.count}">
+                                rent now
+                            </button>
+                            <div th:include="customer/modal :: carRentModal(${car}, ${countStat.count})"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Đóng hàng và mở hàng mới khi cần -->
+            <!--            <div th:if="${countStat.count % 4 == 0}" class="w-100"></div>-->
+        </div>
+    </div>
+</section>
+
+<!--paging-->
+<div align="center" style="margin-left: 10%; margin-right: 10%">
+    <a class="btn btn-primary" th:if="${carDTOPage.hasPrevious()}"
+       th:href="@{/customer/(page=${carDTOPage.number - 1})}">Previous</a>
+    <span th:text="${carDTOPage.number + 1}"></span> | <span th:text="${carDTOPage.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${carDTOPage.hasNext()}"
+       th:href="@{/customer/(page=${carDTOPage.number + 1})}">Next</a>
+</div>
+
+<div th:replace="commons/layout :: scroll-to-top"></div>
+<footer th:replace="/commons/layout :: footer"></footer>
+<th:block th:replace="/commons/layout :: script"></th:block>
+
+<script th:src="@{/js/customer.js}"></script>
+</body>
+</html>

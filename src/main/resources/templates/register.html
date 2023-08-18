@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- Google Fonts ================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Raleway:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+</head>
+<style>
+    .message {
+        color: green;
+    }
+
+    h2 {
+        color: #222222;
+    }
+
+    .sidenav {
+        height: 100%;
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(60, 205, 50, 0.1)),
+        url("../images/background.jpg");
+        background-color: #000;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .main {
+        padding: 0px 10px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        .register-form {
+            margin-top: 10%;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .main {
+            margin-left: 40%;
+        }
+
+        .sidenav {
+            width: 40%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+
+        .register-form {
+            margin-top: 20%;
+        }
+    }
+
+
+    .register-main-text {
+        margin-top: 20%;
+        padding: 60px;
+        color: #fff;
+    }
+
+    .register-main-text h2 {
+        font-weight: 300;
+    }
+
+    .btn-black {
+        background-color: #000 !important;
+        color: #fff;
+    }
+</style>
+<body>
+<div class="sidenav">
+    <div class="register-main-text">
+        <h2>With You <br> On Every Journey</h2>
+    </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="register-form">
+            <h1>REGISTER</h1>
+            <hr>
+            <form autocomplete="off" th:action="@{/user?action=register}" method="post">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" th:name="username" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" th:name="password" placeholder="********" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" th:name="email" placeholder="username@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" th:name="phone" placeholder="0982314526" required>
+                </div>
+                <input type="submit" class="btn btn-black" value="Register">
+                <a th:href="@{/login}" class="btn btn-secondary">Login</a>
+            </form>
+        </div>
+        <div>
+            <div th:if="${message != null}" class="message" th:text="${message}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

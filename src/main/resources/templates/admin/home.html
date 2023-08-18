@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/commons/layout :: head">
+</head>
+<style>
+    th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    td {
+        vertical-align: middle;
+    }
+</style>
+<body>
+<header th:replace="/commons/layout :: header_nav_admin"></header>
+
+<div align="center" style="margin-left: 10%; margin-right: 10%">
+    <caption><h2 style="padding-top: 100px">Lists of car</h2></caption>
+    <!--    message-->
+    <div class="text-center">
+        <span class="message text-success" th:text="${success}"></span>
+    </div>
+    <table class="table table-hover" border="1" cellpadding="5" style="border-collapse: collapse; margin-top: 16px">
+        <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Seat</th>
+            <th>Rental price</th>
+            <th>Car location</th>
+            <th>Images</th>
+            <th>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-gear-fill" viewBox="0 0 16 16">
+                    <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                </svg>
+            </th>
+        </tr>
+        <tr th:each="car : ${carDTOPage}">
+            <td th:text="${car.id}"></td>
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.seat}"></td>
+            <td th:text="${car.rentPrice}"></td>
+            <td th:text="${car.carLocation}"></td>
+            <td>
+                <img th:src="${car.url}" width="100px" height="100px">
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        th:data-bs-target="'#myModal(' + ${car.id} + ')'">
+                    Detail
+                </button>
+
+                <div class="modal fade" th:id="'myModal(' + ${car.id} + ')'" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 35px">
+                    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"> DETAIL CAR -
+                                    <span th:text="${car.brand}"></span>
+                                    <span th:text="${car.model}"></span>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <div class="container-lg my-3">
+                                    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                                        <!-- Carousel indicators -->
+                                        <ol class="carousel-indicators">
+                                            <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+                                            <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+                                            <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+                                            <li data-bs-target="#myCarousel" data-bs-slide-to="3"></li>
+                                        </ol>
+
+                                        <!-- Wrapper for carousel items -->
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img th:src="${car.url}" class="d-block" alt="Slide 1"
+                                                     style="width:800px;height:512px; margin: auto; border-radius: 5%">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img th:src="${car.url2}" class="d-block" alt="Slide 2"
+                                                     style="width:800px;height:512px; margin: auto; border-radius: 5%">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img th:src="${car.url3}" class="d-block" alt="Slide 3"
+                                                     style="width:800px;height:512px; margin: auto; border-radius: 5%">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img th:src="${car.url4}" class="d-block" alt="Slide 4"
+                                                     style="width:800px;height:512px; margin: auto; border-radius: 5%">
+                                            </div>
+                                        </div>
+
+                                        <!-- Carousel controls -->
+                                        <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev"
+                                           style="margin-left: 10%">
+                                            <span class="carousel-control-prev-icon"></span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next"
+                                           style="margin-right: 10%">
+                                            <span class="carousel-control-next-icon"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="container mt-3" style="margin-left: 10%; margin-right: 10%;">
+                                    <h4 th:text="${car.brand + ' ' + car.model}"></h4>
+                                    <h5>Seat</h5>
+                                    <p th:text="${car.seat}"></p>
+                                    <h5>Describe</h5>
+                                    <p th:text="${car.description}"></p>
+                                    <h5>Rental Price</h5>
+                                    <p th:text="${car.rentPrice} + ' VND/Day'"></p>
+                                    <h5>Car location</h5>
+                                    <p th:text="${car.carLocation}"></p>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Modal Edit-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        th:data-bs-target="'#modalEdit(' + ${car.id} + ')'">
+                    Edit
+                </button>
+
+                <div class="modal fade" th:id="'modalEdit(' + ${car.id} + ')'" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <span th:text="${car.brand}"></span>
+                                    <span th:text="${car.model}"></span>
+                                </h4>
+                                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form method="post" action="/admin?action=editCar">
+                                    <div class="row mb-3">
+                                        <label for="inputPrice" class="col-sm-2 col-form-label">Rental price</label>
+                                        <div class="col-sm-10">
+                                            <input type="hidden" name="id" th:if="${car != null}" th:value="${car.id}"/>
+                                            <input type="hidden" name="brand" id="inputBrand" th:value="${car.brand}"/>
+                                            <input type="hidden" name="model" id="inputModel" th:value="${car.model}"/>
+                                            <input type="hidden" name="seat" id="inputSeat" th:value="${car.seat}"/>
+                                            <input type="email" class="form-control" id="inputPrice"
+                                                   th:value="${car.rentPrice}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputDescription"
+                                               class="col-sm-2 col-form-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputDescription"
+                                                   th:value="${car.description}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputURL" class="col-sm-2 col-form-label">URL</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputURL" th:value="${car.url}"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputURL2" class="col-sm-2 col-form-label">URL2</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputURL2"
+                                                   th:value="${car.url2}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputURL3" class="col-sm-2 col-form-label">URL3</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputURL3"
+                                                   th:value="${car.url3}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputURL4" class="col-sm-2 col-form-label">URL4</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputURL4"
+                                                   th:value="${car.url4}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputLocation" class="col-sm-2 col-form-label">Car location</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputLocation"
+                                                   th:value="${car.carLocation}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputStatus" class="col-sm-2 col-form-label">Car status</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputStatus"
+                                                   th:value="${car.status}" required>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-bs-dismiss="modal"
+                                        th:onclick="'editCar(' + ${car.id} + ')'">Save Edit
+                                </button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                <button type="button" class="btn btn-primary" onclick="editCar(${car.id})">Edit</button>-->
+                <!--                <a th:href="@{/admin(action='editCar', id=${car.id})}">Edit</a>-->
+                <!--                <a th:href="@{/admin(action='deleteCar', id=${car.id})}">Delete</a>-->
+                <button type="button" class="btn btn-primary" th:onclick="'deleteCar(' + ${car.id} + ')'">Delete
+                </button>
+
+
+            </td>
+        </tr>
+    </table>
+
+    <a class="btn btn-primary" th:if="${carDTOPage.hasPrevious()}"
+       th:href="@{/admin/(page=${carDTOPage.number - 1})}">Previous</a>
+    <span th:text="${carDTOPage.number + 1}"></span> | <span th:text="${carDTOPage.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${carDTOPage.hasNext()}"
+       th:href="@{/admin/(page=${carDTOPage.number + 1})}">Next</a>
+</div>
+
+
+<footer th:replace="/commons/layout :: footer"></footer>
+<div th:replace="commons/layout :: scroll-to-top"></div>
+<th:block th:replace="/commons/layout :: script"></th:block>
+<script>
+    function editCar(carId) {
+        let brand = document.getElementById("inputBrand").value;
+        let model = document.getElementById("inputModel").value;
+        let seat = document.getElementById("inputSeat").value;
+        let rentalPrice = document.getElementById("inputPrice").value;
+        let description = document.getElementById("inputDescription").value;
+        let url = document.getElementById("inputURL").value;
+        let url2 = document.getElementById("inputURL2").value;
+        let url3 = document.getElementById("inputURL3").value;
+        let url4 = document.getElementById("inputURL4").value;
+        let carLocation = document.getElementById("inputLocation").value;
+        let status = document.getElementById("inputStatus").value;
+
+        let carData = {
+            id: carId,
+            brand: brand,
+            model: model,
+            seat: seat,
+            rentPrice: rentalPrice,
+            description: description,
+            url: url,
+            url2: url2,
+            url3: url3,
+            url4: url4,
+            carLocation: carLocation,
+            status: status
+        };
+
+        $.ajax({
+            url: "/adminRes/car/" + carId,
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(carData),
+            success: function (data) {
+                // Handle success (if needed)
+                console.log("Car edited successfully:", data);
+                window.location.reload();
+            },
+            error: function (error) {
+                // Handle error (if needed)
+                console.error("Error editing car:", error);
+            }
+        });
+    }
+
+
+    function deleteCar(carId) {
+        if (confirm("Are you sure you want to delete this car?")) {
+            $.ajax({
+                type: "DELETE",
+                url: "/adminRes/car/" + carId,
+                success: function (data) {
+                    // Xử lý kết quả sau khi xóa
+
+                    // Reload trang hoặc cập nhật danh sách xe
+                    alert("Deleting car successful.");
+                    window.location.reload(); // hoặc thực hiện cập nhật giao diện
+                },
+                error: function () {
+                    alert("Error deleting car. Please try again later.");
+                }
+            });
+        }
+    }
+
+</script>
+</body>
+</html>
