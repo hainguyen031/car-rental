@@ -3,6 +3,7 @@ package com.hainguyen.carrental.service;
 import com.hainguyen.carrental.dto.CarDTO;
 import com.hainguyen.carrental.dto.SearchCarDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
@@ -29,5 +30,6 @@ public interface ICarService {
 
     Page<CarDTO> findAllCarPage(Pageable pageable);
 
+    Page<CarDTO> searchCarPage(Integer seat, String carLocation, LocalDate startDate, LocalDate endDate, Pageable pageable);
 }
 

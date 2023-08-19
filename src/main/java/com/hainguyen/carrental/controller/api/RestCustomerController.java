@@ -63,11 +63,11 @@ public class RestCustomerController {
 //    }
 
     @PostMapping("/search-car")
-        public ResponseEntity<List<CarDTO>> searchCar(@RequestBody SearchCarDTO searchCarDTO) {
+        public ResponseEntity<?> searchCar(@RequestBody SearchCarDTO searchCarDTO, @PageableDefault(value = 10) Pageable pageable) {
         System.out.println(searchCarDTO);
-        System.out.println(searchCarDTO);
+        Page<CarDTO> carDTOPage = iCarService.searchCarPage(searchCarDTO.getSeat(), searchCarDTO.getCarLocation(), searchCarDTO.getStartDate(), searchCarDTO.getEndDate(), pageable);
         List<CarDTO> carDTOList = iCarService.searchCarByForm(searchCarDTO);
-        return new ResponseEntity<>(carDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(carDTOPage, HttpStatus.OK);
     }
 
 //    @PostMapping("/rent-car")

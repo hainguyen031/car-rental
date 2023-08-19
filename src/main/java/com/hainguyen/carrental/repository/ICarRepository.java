@@ -33,4 +33,21 @@ public interface ICarRepository extends JpaRepository<Car, Long> {
     List<Car> findAllBySeatAndCarLocationAndRentalDateAndReturnDate(int seat, String carLocation, LocalDate rentalDate, LocalDate returnDate);
 
     Page<Car> findAllByStatus(boolean b, Pageable pageable);
+
+    @Query(value = "SELECT c\n" +
+            "FROM Car c\n" +
+            "WHERE c.seat = ?1 AND\n" +
+            "c.carLocation = ?2 AND\n" +
+            "c.status = true AND\n" +
+            "NOT EXISTS (\n" +
+            "    SELECT b.car.id\n" +
+            "    FROM Booking b\n" +
+            "    WHERE b.car.id = c.id AND\n" +
+            "    (b.startDate >= ?3 AND b.startDate <= ?4 OR\n" +
+            "    b.endDate >= ?3 AND b.endDate <= ?4 OR\n" +
+            "    b.startDate <= ?3 AND b.endDate >= ?4)\n" +
+            ")"
+            , nativeQuery = false)
+    Page<Car> findAllByForm(int seat, String carLocation, LocalDate rentalDate, LocalDate returnDate, Pageable pageable);
+
 }

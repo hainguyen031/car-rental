@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -115,6 +116,16 @@ public class CarService implements ICarService {
 //        long totalRecord = cars.getTotalElements();
 //        int currentPage = cars.getNumber();
 //        int size = cars.getSize();
+        return pageCarConverter.apply(cars);
+    }
+
+    @Override
+    public Page<CarDTO> searchCarPage(Integer seat, String carLocation, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+//        int seat = searchCarDTO.getSeat();
+//        String carLocation = searchCarDTO.getCarLocation();
+//        LocalDate rentalDate = searchCarDTO.getStartDate();
+//        LocalDate returnDate = searchCarDTO.getEndDate();
+        Page<Car> cars = iCarRepository.findAllByForm(seat, carLocation, startDate, endDate, pageable);
         return pageCarConverter.apply(cars);
     }
 
