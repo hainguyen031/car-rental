@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,19 +33,25 @@ public class CustomerController {
     public String goHomePage(Model model, @PageableDefault(value = 20) Pageable pageable) {
         Page<CarDTO> carDTOPage = iCarService.findAllCarPage(pageable);
         model.addAttribute("carDTOPage", carDTOPage);
-        return "customer/home";
+        return "/customer/home";
     }
 
-    @PostMapping("/search-car")
-    public String searchCar(@RequestParam("carType") Integer seat, @RequestParam("carLocation") String carLocation,
-                            @RequestParam("pick-up-date") LocalDate startDate, @RequestParam("return-date") LocalDate endDate,
-                            @RequestParam(defaultValue = "0") int page,
-                            Model model, RedirectAttributes redirect) {
-        Page<CarDTO> carDTOPage = iCarService.searchCarPage(seat, carLocation, startDate, endDate, PageRequest.of(page, 20));
-//        List<CarDTO> carDTOList = iCarService.searchCarByForm(searchCarDTO);
-        model.addAttribute("carDTOPage",carDTOPage);
-        return "customer/home";
-    }
+//    @PostMapping("/search-car")
+//    public String searchCar(@RequestParam("carType") Integer seat,
+//                            @RequestParam("carLocation") String carLocation,
+//                            @RequestParam("pick-up-date") String startDateStr,
+//                            @RequestParam("return-date") String endDateStr,
+//                            @RequestParam(defaultValue = "0") int page,
+//                            Model model, RedirectAttributes redirect) {
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+//        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+//        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+//
+//        Page<CarDTO> carDTOPage = iCarService.searchCarPage(seat, carLocation, startDate, endDate, PageRequest.of(page, 10));
+//        model.addAttribute("carDTOPage",carDTOPage);
+//        return "/customer/home";
+//    }
 
     @ExceptionHandler(ObjectNotFound.class)
     public ModelAndView showNotFoundPage() {

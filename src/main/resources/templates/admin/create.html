@@ -2,6 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/commons/layout :: head">
 </head>
+<style>
+.input-group {
+    margin-top: 16px;
+}
+label {
+    width: 150px;
+    text-align: left;
+}
+</style>
 <body>
 <header th:replace="/commons/layout :: header_nav_admin"></header>
 
@@ -14,36 +23,36 @@
         <caption>
             <h2 style="padding-top: 100px">Add New Car</h2>
         </caption>
-        <div class="form-group">
-            <label>Car brand</label>
-            <input class="form-control" type="text" th:field="*{brand}" required/>
+        <div class="input-group">
+            <label th:for="carBrand">Car brand</label>
+            <input class="form-control" type="text" th:id="carBrand" th:field="*{brand}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('brand')}"
                    th:errors="*{brand}"></small>
         </div>
-        <div class="form-group">
-            <label>Car model</label>
-            <input class="form-control" type="text" th:field="*{model}" required/>
+        <div class="input-group">
+            <label th:for="carModel">Car model</label>
+            <input class="form-control" type="text" th:id="carModel" th:field="*{model}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('model')}"
                    th:errors="*{model}"></small>
         </div>
-        <div class="form-group">
-            <label>Numbers of seat</label>
-            <select class="form-control" th:field="*{seat}">
+        <div class="input-group">
+            <label th:for="carSeat">Numbers of seat</label>
+            <select class="form-control" th:id="carSeat" th:field="*{seat}">
                 <option value="4">4 seats</option>
                 <option value="7">7 seats</option>
             </select>
             <small Class="text-danger" th:if="${#fields.hasErrors('seat')}"
                    th:errors="*{seat}"></small>
         </div>
-        <div class="form-group">
-            <label>Rental price</label>
-            <input class="form-control" type="text" th:field="*{rentPrice}" required/>
+        <div class="input-group">
+            <label th:for="carRP">Rental price</label>
+            <input class="form-control" type="text" th:id="carRP" th:field="*{rentPrice}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('rentPrice')}"
                    th:errors="*{rentPrice}"></small>
         </div>
-        <div class="form-group">
-            <label>Car location</label>
-            <select class="form-control" th:field="*{carLocation}">
+        <div class="input-group">
+            <label th:for="carLocation">Car location</label>
+            <select class="form-control" th:id="carLocation" th:field="*{carLocation}">
                 <option value="Ha Noi">Ha Noi</option>
                 <option value="Da Nang">Da Nang</option>
                 <option value="Ho Chi Minh">Ho Chi Minh</option>
@@ -51,33 +60,33 @@
             <small Class="text-danger" th:if="${#fields.hasErrors('carLocation')}"
                    th:errors="*{carLocation}"></small>
         </div>
-        <div class="form-group">
-            <label>URL</label>
-            <input class="form-control" type="text" th:field="*{url}" required/>
+        <div class="input-group">
+            <label th:for="carURL">URL</label>
+            <input class="form-control" type="text" th:id="carURL" th:field="*{url}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('url')}"
                    th:errors="*{url}"></small>
         </div>
-        <div class="form-group">
-            <label>URL2</label>
-            <input class="form-control" type="text" th:field="*{url2}" required/>
+        <div class="input-group">
+            <label th:for="carURL2">URL2</label>
+            <input class="form-control" type="text" th:id="carURL2" th:field="*{url2}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('url2')}"
                    th:errors="*{url2}"></small>
         </div>
-        <div class="form-group">
-            <label>URL3</label>
-            <input class="form-control" type="text" th:field="*{url3}" required/>
+        <div class="input-group">
+            <label th:for="carURL3">URL3</label>
+            <input class="form-control" type="text" th:id="carURL3" th:field="*{url3}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('url3')}"
                    th:errors="*{url3}"></small>
         </div>
-        <div class="form-group">
-            <label>URL4</label>
-            <input class="form-control" type="text" th:field="*{url4}" required/>
+        <div class="input-group">
+            <label th:for="carURL4">URL4</label>
+            <input class="form-control" type="text" th:id="carURL4" th:field="*{url4}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('url4')}"
                    th:errors="*{url4}"></small>
         </div>
-        <div class="form-group">
-            <label>Describe</label>
-            <input class="form-control" type="text" th:field="*{description}" required/>
+        <div class="input-group">
+            <label th:for="carDes">Describe</label>
+            <input class="form-control" type="text" th:id="carDes" th:field="*{description}" required/>
             <small Class="text-danger" th:if="${#fields.hasErrors('description')}"
                    th:errors="*{description}"></small>
         </div>

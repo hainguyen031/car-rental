@@ -17,7 +17,7 @@ public interface IBookingRepository extends JpaRepository<Booking, Long> {
             "AND ((b.startDate >= :rentalDate AND b.startDate <= :returnDate) OR " +
             "(b.endDate >= :rentalDate AND b.endDate <= :returnDate) OR " +
             "(b.startDate <= :rentalDate AND b.endDate >= :returnDate))")
-    boolean checkCarAvailability(@Param("carId") Long carId,
+    Long checkCarAvailability(@Param("carId") Long carId,
                                  @Param("rentalDate") LocalDate rentalDate,
                                  @Param("returnDate") LocalDate returnDate);
 

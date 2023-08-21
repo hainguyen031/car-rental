@@ -9,6 +9,7 @@
     }
 
     td {
+        text-align: center;
         vertical-align: middle;
     }
 </style>
@@ -42,7 +43,7 @@
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
             <td th:text="${car.seat}"></td>
-            <td th:text="${car.rentPrice}"></td>
+            <td th:text="${car.formatRentPrice()} + ' VND/Day'"></td>
             <td th:text="${car.carLocation}"></td>
             <td>
                 <img th:src="${car.url}" width="100px" height="100px">

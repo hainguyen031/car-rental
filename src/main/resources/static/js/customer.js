@@ -1,86 +1,25 @@
-// $(document).ready(function () {
-//     $('#search-form').submit(function (event) {
-//         event.preventDefault(); // Ngăn chặn gửi lại trang
-//
-//         let seat = parseInt(document.getElementById("seat").value);
-//         let carLocation = document.getElementById("location").value;
-//         let pickUpDate = document.getElementById("pick-up-date").value;
-//         let returnDate = document.getElementById("return-date").value;
-//
-//         let searchData = {
-//             seat: seat,
-//             carLocation: carLocation,
-//             startDate: new Date(pickUpDate),
-//             endDate: new Date(returnDate)
-//         };
-//         $.ajax({
-//             type: 'POST',
-//             url: '/customerRes/search-car',
-//             data: JSON.stringify(searchData),
-//             contentType: 'application/json',
-//             success: function (data) {
-//                 // Xử lý kết quả tìm kiếm
-//                 console.log(data);
-//                 let temp = "";
-//                 for (let i = 0; i < data.content.length; i++) {
-//                     temp += getCarDTO(data.content[i]);
-//                 }
-//                 $('#search-result').html(temp);
-//
-//                 // Hiển thị phân trang
-//                 let pagination = `
-//                     <ul class="pagination justify-content-center mt-4">
-//                         <li class="page-item ${data.first ? 'disabled' : ''}">
-//                             <a class="page-link" href="#" onclick="loadPage(${data.number - 1})">Previous</a>
-//                         </li>
-//                 `;
-//
-//                 for (let i = 0; i < data.totalPages; i++) {
-//                     pagination += `
-//                         <li class="page-item ${data.number === i ? 'active' : ''}">
-//                             <a class="page-link" href="#" onclick="loadPage(${i})">${i + 1}</a>
-//                         </li>
-//                     `;
-//                 }
-//
-//                 pagination += `
-//                         <li class="page-item ${data.last ? 'disabled' : ''}">
-//                             <a class="page-link" href="#" onclick="loadPage(${data.number + 1})">Next</a>
-//                         </li>
-//                     </ul>
-//                 `;
-//
-//                 $('#pagination').html(pagination);
-//             },
-//             error: function () {
-//                 alert('Error searching for cars. Please try again later.');
-//             }
-//         });
-//     });
-// });
-
-
-function successHandler() {
-    $.ajax({
-        type: "GET",
-        //tên API
-        url: "/customerRes",
-        //xử lý khi thành công
-        success: function (carDTO) {
-            // hien thi danh sach o day
-            let content = "";
-            debugger
-            for (let i = 0; i < carDTO.content.length; i++) {
-                content += getCarDTO(carDTO.content[i]);
+$(document).ready( ()=> {
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            //tên API
+            url: "/customerRes",
+            //xử lý khi thành công
+            success: function (carDTO) {
+                // hien thi danh sach o day
+                let content = "";
+                debugger
+                for (let i = 0; i < carDTO.content.length; i++) {
+                    content += getCarDTO(carDTO.content[i]);
+                }
+                debugger
+                document.getElementById('search-result').innerHTML = content;
             }
-            debugger
-            document.getElementById('search-result').innerHTML = content;
-        }
-    });
-}
+        });
+    }
 
-function getCarDTO(carDTO) {
-    return `
+    function getCarDTO(carDTO) {
+        return `
             <div class="col-md-4 col-lg-3 mb-3 mb-md-0">
                 <div class="card text-black" style="background-color: #f5f4f4; border-radius: 5%; margin-top: 15px">
                     <img src="${carDTO.url}" class="card-img-top" alt="..."
@@ -396,7 +335,7 @@ function getCarDTO(carDTO) {
                     <hr>
                     <h4>Car rental customer information</h4>
                     <br>
-                    <form class="row g-3 justify-content-center" id="rent-form">
+                    <form class="row g-3 justify-content-center">
                         <div class="col-md-6">
                             <label for="startDate">Rental date:</label>
                             <input type="date" id="startDate" name="startDate" required>
@@ -417,24 +356,24 @@ function getCarDTO(carDTO) {
                             <span class="input-group-text" id="cccd" style="width: 20%;">CCCD</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   aria-describedby="cccd" name="cccd"/>
+                                   aria-describedby="cccd" id="cccd" name="cccd"/>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="gplx" style="width: 20%;">GPLX</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   aria-describedby="gplx" name="gplx"/>
+                                   aria-describedby="gplx" id="gplx" name="gplx"/>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="pickupLocation1" style="width: 20%;">Pickup Location:</span>
                             <input type="text" class="form-control" placeholder="21k nguyen van troi"
                                    aria-label="21k nguyen van troi"
-                                   aria-describedby="pickupLocation1" name="pickupLocation1"/>
+                                   aria-describedby="pickupLocation1" id="pickupLocation1" name="pickupLocation1"/>
                             <input type="hidden" value="${carDTO.id}" name="carId" id="carId">
                         </div>
-                        <button type="submit" class="btn btn-primary">CONFIRM RENTING</button>
+                        <button id="rent-form" type="button" class="btn btn-primary">CONFIRM RENTING</button>
                     </form>
                 </div>
             </div>
@@ -445,13 +384,17 @@ function getCarDTO(carDTO) {
                             </div>
                 </div>
             </div>  `;
-}
+    }
 
-function formatNumberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+    function formatNumberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
-$(document).ready(function () {
+    // Sự kiện gửi form
+    $('#search-form').submit(function (event) {
+        event.preventDefault();
+        loadPage(0); // Load trang đầu tiên khi gửi form
+    });
     // Số trang hiện tại
     let currentPage = 0;
 
@@ -485,7 +428,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/customerRes/search-car',
+            url: '/customerRes/search-car?page=' + currentPage,
             data: JSON.stringify(searchData),
             contentType: 'application/json',
             dataType: 'json',
@@ -522,20 +465,9 @@ $(document).ready(function () {
         });
     }
 
-    // Sự kiện gửi form
-    $('#search-form').submit(function (event) {
-        event.preventDefault();
-        loadPage(0); // Load trang đầu tiên khi gửi form
-    });
-});
-
-
-
-$(document).ready(function () {
-$('#rent-form').submit(function (event) {
-    event.preventDefault();
-
+    function handleFormSubmit() {
         let cusId = 1;
+        // let carId = ('#carId').val();
         let carId = document.getElementById("carId").value;
         let cccd = document.getElementById("cccd").value;
         let gplx = document.getElementById("gplx").value;
@@ -552,13 +484,13 @@ $('#rent-form').submit(function (event) {
             startDate : new Date(startDateStr),
             endDate : new Date(endDateStr)
         };
-
+        console.log(rentData);
         $.ajax({
             type: 'POST',
             url: '/customerRes/rent-car',
             data: JSON.stringify(rentData),
             contentType: 'application/json',
-            dataType: 'json',
+            // dataType: 'json',
             success: function (data) {
                 console.log(data);
             },
@@ -566,5 +498,14 @@ $('#rent-form').submit(function (event) {
                 alert('Error rent cars. Please try again later.');
             }
         });
+    }
+    $('#rentForm').on('click',()=>{
+        console.log("c");
+        handleFormSubmit();
+    })
+
 });
-});
+
+
+
+

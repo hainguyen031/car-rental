@@ -115,7 +115,7 @@
                                     th:data-bs-target="'#carRentModal' + ${countStat.count}">
                                 rent now
                             </button>
-                            <div th:include="customer/modal :: carRentModal(${car}, ${countStat.count})"></div>
+                            <div th:replace="customer/modal :: carRentModal(${car}, ${countStat.count})"></div>
                         </div>
                     </div>
                 </div>
@@ -152,5 +152,75 @@
 <th:block th:replace="/commons/layout :: script"></th:block>
 
 <script th:src="@{/js/customer.js}"></script>
+
+<script>
+    let currentPage = 0;
+    function loadPage(page) {
+        currentPage = page;
+        let seat = parseInt(document.getElementById("seat").value);
+        let carLocation = document.getElementById("location").value;
+        let pickUpDate = document.getElementById("pick-up-date").value;
+        let returnDate = document.getElementById("return-date").value;
+
+        let searchData = {
+            seat: seat,
+            carLocation: carLocation,
+            startDate: new Date(pickUpDate),
+            endDate: new Date(returnDate),
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/customerRes/search-car?page=' + currentPage,
+            data: JSON.stringify(searchData),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                // Xử lý kết quả tìm kiếm
+                console.log(data);
+                displayCars(data);
+
+                // Hiển thị phân trang
+                let pagination = '';
+
+                if (data.number > 0) {
+                    pagination += `
+                        <a class="btn btn-primary" href="#" onclick="loadPage(${data.number - 1})">Previous</a>
+                    `;
+                }
+
+                // for (let i = 0; i < data.totalPages; i++) {
+                pagination += `
+                        <span>${data.number + 1}</span> | <span>${data.totalPages}</span>
+                    `;
+                // }
+
+                if (data.number < data.totalPages - 1) {
+                    pagination += `
+                        <a class="btn btn-primary" href="#" onclick="loadPage(${data.number + 1})">Next</a>
+                    `;
+                }
+                $('#pagination').html(pagination);
+            },
+            error: function () {
+                alert('Error searching for cars. Please try again later.');
+            }
+        });
+    }
+
+    function displayCars(carDTOPage) {
+        let temp = "";
+        for (let i = 0; i < carDTOPage.content.length; i++) {
+            temp += getCarDTO(carDTOPage.content[i]);
+        }
+        $('#search-result').html(temp);
+        $('[data-bs-toggle="modal"]').click(function () {
+            var target = $(this).data('bs-target');
+            $(target).modal('show');
+        });
+    }
+
+
+</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -290,57 +290,57 @@
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header" style="margin-top: 6%">
-                    <h1 class="modal-title fs-5" th:id="'rentCar1' + ${count}">CAR RENTAL INFORMATION</h1>
+                    <h4 class="modal-title fs-5" th:id="'rentCar1' + ${count}">CAR RENTAL INFORMATION</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h4>Car information</h4>
+                    <h5>Car information</h5>
                     <br>
                     <p>Car type: <b th:text="${car.brand} + ' ' + ${car.model}"></b></p>
                     <p>Number of seats: <b th:text="${car.seat}"></b></p>
                     <p>Rental price: <b th:text="${car.formatRentPrice()} + ' VND/Day'"></b></p>
                     <hr>
-                    <h4>Car rental customer information</h4>
+                    <h5>Car rental customer information</h5>
                     <br>
-                    <form class="row g-3 justify-content-center" method="post" action="/customer?action=rentCar">
+                    <form class="row g-3 justify-content-center" >
                         <div class="col-md-6">
-                            <label for="startDate">Rental date:</label>
-                            <input type="date" id="startDate" name="startDate" required>
+                            <label th:for="startDate">Rental date:</label>
+                            <input type="date" id="startDate" th:name="startDate" required>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="endDate">Return date:</label>
-                            <input type="date" id="endDate" name="endDate" required>
+                            <label th:for="endDate">Return date:</label>
+                            <input type="date" id="endDate" th:name="endDate" required>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="fullName1" style="width: 20%;">Username</span>
 <!--                            <input type="text" class="form-control" th:placeholder="${user.username}" disabled/>-->
-                            <input type="text" class="form-control" th:placeholder="hello" disabled/>
+                            <input type="text" class="form-control" th:placeholder="hellomodal" disabled/>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="cccd" style="width: 20%;">CCCD</span>
+                            <span class="input-group-text" style="width: 20%;">CCCD</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   aria-describedby="cccd" name="cccd"/>
+                                   th:aria-describedby="cccd" id="cccd" th:name="cccd"/>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="gplx" style="width: 20%;">GPLX</span>
+                            <span class="input-group-text" style="width: 20%;">GPLX</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   aria-describedby="gplx" name="gplx"/>
+                                   th:aria-describedby="gplx" id="gplx" th:name="gplx"/>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="pickupLocation1" style="width: 20%;">Pickup Location:</span>
+                            <span class="input-group-text" style="width: 20%;">Pickup Location:</span>
                             <input type="text" class="form-control" placeholder="21k nguyen van troi"
                                    aria-label="21k nguyen van troi"
-                                   aria-describedby="pickupLocation1" name="pickupLocation1"/>
-                            <input type="hidden" th:value="${car.id}" name="carId">
+                                   th:aria-describedby="pickupLocation1" id="pickupLocation1" th:name="pickupLocation1"/>
+                            <input type="hidden" th:value="${car.id}" id="carId" th:name="carId">
                         </div>
-                        <button type="button" class="btn btn-primary">CONFIRM RENTING</button>
+                        <button id="rentForm" type="button" class="btn btn-primary">CONFIRM RENTING</button>
                     </form>
                 </div>
 <!--                <div class="modal-footer">-->
@@ -349,7 +349,6 @@
         </div>
     </div>
 </div>
-
-
+<script th:src="@{/js/customer.js}"></script>
 </body>
 </html>

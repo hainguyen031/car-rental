@@ -66,7 +66,7 @@ public class RestCustomerController {
         public ResponseEntity<?> searchCar(@RequestBody SearchCarDTO searchCarDTO, @PageableDefault(value = 10) Pageable pageable) {
         System.out.println(searchCarDTO);
         Page<CarDTO> carDTOPage = iCarService.searchCarPage(searchCarDTO.getSeat(), searchCarDTO.getCarLocation(), searchCarDTO.getStartDate(), searchCarDTO.getEndDate(), pageable);
-        List<CarDTO> carDTOList = iCarService.searchCarByForm(searchCarDTO);
+//        List<CarDTO> carDTOList = iCarService.searchCarByForm(searchCarDTO);
         return new ResponseEntity<>(carDTOPage, HttpStatus.OK);
     }
 
@@ -88,11 +88,17 @@ public class RestCustomerController {
 
     @PostMapping("/rent-car")
     public ResponseEntity<?> rentCar(@RequestBody BookingDTO bookingDTO) {
-        boolean success = iCarService.rentCar(bookingDTO.getCustomerId(), bookingDTO.getCarId(), bookingDTO.getCccd(), bookingDTO.getGplx(), bookingDTO.getPickupLocation(), bookingDTO.getStartDate(), bookingDTO.getEndDate());
+        boolean success = iCarService.rentCar(bookingDTO.getCustomerId(),
+                bookingDTO.getCarId(),
+                bookingDTO.getCccd(),
+                bookingDTO.getGplx(),
+                bookingDTO.getPickupLocation(),
+                bookingDTO.getStartDate(),
+                bookingDTO.getEndDate());
         if (success) {
             return new ResponseEntity<>("Car rented successfully.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Car rental failed.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Car rental failed.", HttpStatus.CONFLICT);
         }
     }
 

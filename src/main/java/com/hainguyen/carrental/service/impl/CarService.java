@@ -4,8 +4,10 @@ import com.hainguyen.carrental.dto.CarDTO;
 import com.hainguyen.carrental.dto.SearchCarDTO;
 import com.hainguyen.carrental.model.Booking;
 import com.hainguyen.carrental.model.Car;
+import com.hainguyen.carrental.model.User;
 import com.hainguyen.carrental.repository.IBookingRepository;
 import com.hainguyen.carrental.repository.ICarRepository;
+import com.hainguyen.carrental.repository.IUserRepository;
 import com.hainguyen.carrental.service.ICarService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +30,8 @@ public class CarService implements ICarService {
     private ICarRepository iCarRepository;
     @Autowired
     private IBookingRepository iBookingRepository;
+    @Autowired
+    private IUserRepository iUserRepository;
 
     private Function<List<Car>, List<CarDTO>> listCarConverter;
     private Function<Car, CarDTO> carConverter;
@@ -65,14 +69,20 @@ public class CarService implements ICarService {
     @Override
     public boolean rentCar(Long id, Long carID, String cccd, String gplx, String pickupLocation, LocalDate rentalDate, LocalDate returnDate) {
         Optional<Car> carOptional = iCarRepository.findById(carID);
-        if (carOptional.isPresent()) {
+        Optional<User> userOptional = iUserRepository.findById(id);
+        if (carOptional.isPresent() & userOptional.isPresent()) {
             Car car = carOptional.get();
-            boolean isAvailable = iBookingRepository.checkCarAvailability(car.getId(), rentalDate, returnDate);
-            if (isAvailable) {
+            User user = userOptional.get();
+            Long isAvailable = iBookingRepository.checkCarAvailability(car.getId(), rentalDate, returnDate);
+            if (isAvailable == 0) {
                 Booking booking = new Booking();
                 booking.setCar(car);
                 booking.setStartDate(rentalDate);
                 booking.setEndDate(returnDate);
+                booking.setUser(user);
+                booking.setCccd(cccd);
+                booking.setGplx(gplx);
+                booking.setPickupLocation(pickupLocation);
                 iBookingRepository.save(booking);
                 return true;
             }
