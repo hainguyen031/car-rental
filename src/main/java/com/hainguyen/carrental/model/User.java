@@ -31,6 +31,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "roles")
+    private String roles;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Booking> bookingList;
 }

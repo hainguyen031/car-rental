@@ -1,6 +1,7 @@
 package com.hainguyen.carrental.controller.api;
 
 import com.hainguyen.carrental.dto.BookingDTO;
+import com.hainguyen.carrental.dto.BookingDTOResponse;
 import com.hainguyen.carrental.dto.CarDTO;
 import com.hainguyen.carrental.exception.ObjectNotFound;
 import com.hainguyen.carrental.service.IBookingService;
@@ -25,15 +26,21 @@ public class RestAdminController {
     private ICarService iCarService;
 
     @GetMapping("/booking-history/{id}")
-    public ResponseEntity<List<BookingDTO>> getBookingHistoryForCar(@PathVariable Long id) {
-        List<BookingDTO> bookingList = iBookingService.getBookingHistoryForCar(id);
+    public ResponseEntity<List<BookingDTOResponse>> getBookingHistoryForCar(@PathVariable Long id) {
+        List<BookingDTOResponse> bookingList = iBookingService.getBookingHistoryForCar(id);
         return new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
     @GetMapping("/booking-history-paging/{id}")
-    public ResponseEntity<Page<BookingDTO>> getBookingPaging(@PathVariable Long id, @PageableDefault(value = 5) Pageable pageable) {
-        Page<BookingDTO> bookingDTOPage = iBookingService.getBookingHistoryForCarPaging(id, pageable);
+    public ResponseEntity<Page<BookingDTOResponse>> getBookingPaging(@PathVariable Long id, @PageableDefault(value = 5) Pageable pageable) {
+        Page<BookingDTOResponse> bookingDTOPage = iBookingService.getBookingHistoryForCarPaging(id, pageable);
         return new ResponseEntity<>(bookingDTOPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/all-Booking")
+    public ResponseEntity<?> getAllBooking() {
+        List<BookingDTOResponse> bookingDTOResponses = iBookingService.findAll();
+        return new ResponseEntity<>(bookingDTOResponses, HttpStatus.OK);
     }
 
     @PostMapping("/car")

@@ -44,7 +44,7 @@ $(document).ready( ()=> {
                       <button type="button" class="btn-close" data-bs-dismiss="modal"
                               aria-label="Close"></button>
                   </div>
-                  <div class="modal-body" >
+                  <div class="modal-body" style="overflow-x: inherit;">
                       <!-- Ảnh xe -->
                       <div class="display-container">
                           <!-- Carousel -->
@@ -61,24 +61,24 @@ $(document).ready( ()=> {
                               <!-- The slideshow/carousel -->
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                      <img src="${carDTO.url}" alt="IMG1" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img src="${carDTO.url}" alt="IMG1" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img src="${carDTO.url2}" alt="IMG2" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img src="${carDTO.url2}" alt="IMG2" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img src="${carDTO.url3}" alt="IMG3" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img src="${carDTO.url3}" alt="IMG3" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img src="${carDTO.url4}" alt="IMG4" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img src="${carDTO.url4}" alt="IMG4" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                               </div>
 
                               <!-- Left and right controls/icons -->
-                              <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                              <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" style="margin-left: 15%">
                                   <span class="carousel-control-prev-icon"></span>
                               </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                              <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="margin-right: 15%">
                                   <span class="carousel-control-next-icon"></span>
                               </button>
                           </div>
@@ -86,7 +86,7 @@ $(document).ready( ()=> {
                       <!-- Nội dung chi tiết xe -->
                       <div class="container mt-3" style="margin-left: 10%; margin-right: 10%;">
                           <div class="row">
-                              <div class="col-sm-8">
+                              <div class="col-sm-7">
                                   <div class="main-content">
                                       <h4>    <span>${carDTO.brand}</span>
                                           <span>${carDTO.model}</span>
@@ -322,7 +322,7 @@ $(document).ready( ()=> {
          aria-labelledby="rentCar1${carDTO.id}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header" style="margin-top: 6%">
+                <div class="modal-header">
                     <h1 class="modal-title fs-5" id="rentCar1${carDTO.id}">CAR RENTAL INFORMATION</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -447,7 +447,7 @@ $(document).ready( ()=> {
                 }
 
                 // for (let i = 0; i < data.totalPages; i++) {
-                    pagination += `
+                pagination += `
                         <span>${data.number + 1}</span> | <span>${data.totalPages}</span>
                     `;
                 // }
@@ -505,7 +505,3 @@ $(document).ready( ()=> {
     })
 
 });
-
-
-
-

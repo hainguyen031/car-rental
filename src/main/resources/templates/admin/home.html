@@ -16,7 +16,7 @@
 <body>
 <header th:replace="/commons/layout :: header_nav_admin"></header>
 
-<div align="center" style="margin-left: 10%; margin-right: 10%">
+<div align="center" style="margin-left: 10%; margin-right: 10%" id="renderHome">
     <caption><h2 style="padding-top: 100px">Lists of car</h2></caption>
     <!--    message-->
     <div class="text-center">
@@ -55,7 +55,7 @@
                 </button>
 
                 <div class="modal fade" th:id="'myModal(' + ${car.id} + ')'" tabindex="-1"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 35px">
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
                         <div class="modal-content">
 
@@ -113,16 +113,24 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="container mt-3" style="margin-left: 10%; margin-right: 10%;">
+                                <div class="container mt-3">
                                     <h4 th:text="${car.brand + ' ' + car.model}"></h4>
-                                    <h5>Seat</h5>
-                                    <p th:text="${car.seat}"></p>
-                                    <h5>Describe</h5>
-                                    <p th:text="${car.description}"></p>
-                                    <h5>Rental Price</h5>
-                                    <p th:text="${car.rentPrice} + ' VND/Day'"></p>
-                                    <h5>Car location</h5>
-                                    <p th:text="${car.carLocation}"></p>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"style="width: 20%;">Seat</span>
+                                        <input type="text" class="form-control" th:placeholder="${car.seat}" disabled/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"style="width: 20%;">Describe</span>
+                                        <input type="text" class="form-control" th:placeholder="${car.description}" disabled/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"style="width: 20%;">Rental Price</span>
+                                        <input type="text" class="form-control" th:placeholder="${car.rentPrice}" disabled/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"style="width: 20%;">Car location</span>
+                                        <input type="text" class="form-control" th:placeholder="${car.carLocation}" disabled/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -231,9 +239,6 @@
                         </div>
                     </div>
                 </div>
-                <!--                <button type="button" class="btn btn-primary" onclick="editCar(${car.id})">Edit</button>-->
-                <!--                <a th:href="@{/admin(action='editCar', id=${car.id})}">Edit</a>-->
-                <!--                <a th:href="@{/admin(action='deleteCar', id=${car.id})}">Delete</a>-->
                 <button type="button" class="btn btn-primary" th:onclick="'deleteCar(' + ${car.id} + ')'">Delete
                 </button>
 
@@ -319,6 +324,62 @@
         }
     }
 
+    function renderAllBooking(data, count) {
+        return `
+                <div>
+                    <caption><h5 style="padding-top: 100px">Booking Information ${count}</h5></caption>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">Cus ID: </span>
+                    <span> ${data.userId}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">Car ID: </span>
+                    <span> ${data.carId}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">Start date: </span>
+                    <span> ${data.startDate}</span>
+                </div>
+                <div class="mb-2">
+                        <span class="fw-bold text-decoration-underline fs-6">End date: </span>
+                    <span> ${data.endDate}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">CCCD: </span>
+                    <span> ${data.cccd}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">GPLX: </span>
+                    <span> ${data.gplx}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold text-decoration-underline fs-6">Pickup location: </span>
+                    <div> ${data.pickupLocation}</div>
+                </div>`;
+    }
+
+    $("#myHref").on('click', function() {
+        alert("inside onclick");
+        $.ajax({
+            url: "/adminRes/all-Booking",
+            type: "GET",
+            dataType: "json",
+            success: (response) => {
+                let temp = "";
+                let count = 0;
+                for (let  i = 0; i < response.length; i++) {
+                    count ++;
+                    temp += renderAllBooking(response[i], count);
+                }
+                $("#renderHome").html(temp);
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        })
+
+    });
 </script>
 </body>
 </html>

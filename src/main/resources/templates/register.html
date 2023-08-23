@@ -92,22 +92,34 @@
         <div class="register-form">
             <h1>REGISTER</h1>
             <hr>
-            <form autocomplete="off" th:action="@{/user?action=register}" method="post">
+            <form autocomplete="off" th:action="@{/doRegister}" th:object="${userDTO}" method='POST' id="form">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" th:name="username" placeholder="username" required>
+                    <input type="text" class="form-control" id="username" name="username" th:field="*{username}" placeholder="username" required>
+                    <p th:errors="*{username}" class="text-danger"
+                       th:if="${#fields.hasErrors('username')}">
+                    </p>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" th:name="password" placeholder="********" required>
+                    <input type="password" class="form-control" name="password" id="password" th:field="*{password}" placeholder="********" required>
+                    <p th:errors="*{password}" class="text-danger"
+                       th:if="${#fields.hasErrors('password')}">
+                    </p>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" class="form-control" th:name="email" placeholder="username@gmail.com" required>
+                    <input type="email" class="form-control" name="email" id="email" th:field="*{email}" placeholder="username@gmail.com" required>
+                    <p th:errors="*{email}" class="text-danger"
+                       th:if="${#fields.hasErrors('email')}">
+                    </p>
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" class="form-control" th:name="phone" placeholder="0982314526" required>
+                    <input type="text" class="form-control" name="phone" id="phone" th:field="*{phone}" placeholder="0982314526" required>
+                    <p th:errors="*{phone}" class="text-danger"
+                       th:if="${#fields.hasErrors('phone')}">
+                    </p>
                 </div>
                 <input type="submit" class="btn btn-black" value="Register">
                 <a th:href="@{/login}" class="btn btn-secondary">Login</a>
@@ -118,5 +130,86 @@
         </div>
     </div>
 </div>
+<!--<script>-->
+
+<!--    const form = document.getElementById('form');-->
+<!--    const name = document.getElementById('username');-->
+<!--    const email = document.getElementById('email');-->
+<!--    const password = document.getElementById('password');-->
+<!--    const phone = document.getElementById('phone');-->
+
+<!--    form.addEventListener('submit', e => {-->
+<!--        e.preventDefault();-->
+
+<!--        checkInputs();-->
+<!--    });-->
+
+<!--    function checkInputs() {-->
+<!--        // trim to remove the whitespaces-->
+<!--        const usernameValue = name.value.trim();-->
+<!--        const emailValue = email.value.trim();-->
+<!--        const passwordValue = password.value.trim();-->
+<!--        const phoneValue = phone.value.trim();-->
+
+<!--        if (usernameValue === '') {-->
+<!--            setErrorFor(name, 'Please enter your username');-->
+<!--        } else {-->
+<!--            setSuccessFor(name);-->
+<!--        }-->
+
+<!--        if (emailValue === '') {-->
+<!--            setErrorFor(email, 'Please enter your email');-->
+<!--        } else if (!isEmail(emailValue)) {-->
+<!--            setErrorFor(email, 'Email not valid');-->
+<!--        } else {-->
+<!--            setSuccessFor(email);-->
+<!--        }-->
+
+<!--        if (passwordValue === '') {-->
+<!--            setErrorFor(password, 'Please enter password');-->
+<!--        } else if (!isPassword(passwordValue)) {-->
+<!--            setErrorFor(password, 'atleast one number, one uppercase, lowercase letter, and atleast 8 character');-->
+<!--        }else {-->
+<!--            setSuccessFor(password);-->
+<!--        }-->
+
+<!--        if (phoneValue === '') {-->
+<!--            setErrorFor(phone, 'Please enter phone number');-->
+<!--        }else if (!isPhone(phoneValue)) {-->
+<!--            setErrorFor(phone, 'Phone not valid, 10 or 11-digit phone number');-->
+<!--        } else {-->
+<!--            setSuccessFor(phone);-->
+<!--        }-->
+
+<!--    }-->
+
+<!--    function setErrorFor(input, message) {-->
+<!--        const formControl = input.parentElement;-->
+<!--        const small = formControl.querySelector('small');-->
+<!--        formControl.className = 'form-control error';-->
+<!--        small.innerText = message;-->
+<!--    }-->
+
+<!--    function setSuccessFor(input) {-->
+<!--        const formControl = input.parentElement;-->
+<!--        formControl.className = 'form-control success';-->
+<!--    }-->
+
+<!--    function isEmail(email) {-->
+<!--        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);-->
+<!--    }-->
+
+<!--    function isPassword(password){-->
+<!--        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);-->
+<!--    }-->
+
+<!--    function isPhone(phone){-->
+<!--        return /^\d{10,11}$/.test(phone);-->
+<!--    }-->
+
+
+
+
+<!--</script>-->
 </body>
 </html>

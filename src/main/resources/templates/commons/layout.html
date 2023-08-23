@@ -64,11 +64,11 @@
                             <a class="nav-link px-3" th:href="@{/admin/create}">Add Car</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" th:href="@{/admin/listBooking}">List Booking</a>
+                            <a class="nav-link px-3" th:href="@{#}" id="myHref">List Booking</a>
                         </li>
                         <li class="nav-item">
                             <button type="button" class="btn btn-outline-primary nav-button mx-3"
-                                    th:onclick="|window.location.href = '/user?action=login';|"> Logout
+                                    onclick="window.location.href = '/logout';"> Logout
                             </button>
                         </li>
                     </ul>
@@ -78,6 +78,49 @@
     </nav>
 </header>
 <!-- Header Close -->
+
+<header th:fragment="header_nav_customer">
+    <nav class="navbar navbar-expand-lg  navbar-light container-fluid py-3 position-fixed " style="z-index: 100">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/customer}"><img th:src="@{/images/logo.png}" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel2">Menu</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav align-items-center justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active px-3" aria-current="page" th:href="@{/customer}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3" th:href="@{/customer/myBooking}">MyBooking</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex mt-5 mt-lg-0 ps-lg-5 align-items-center justify-content-center ">
+                        <ul class="navbar-nav justify-content-end align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="#"> Welcome
+                                    <b><span th:utext="${#request.userPrincipal.name}"></span></b>
+                                </a>
+
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-outline-primary nav-button mx-3"
+                                onclick="window.location.href = '/logout';"> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
 
 <!-- footer Start -->
 <footer th:fragment="footer">

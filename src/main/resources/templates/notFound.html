@@ -3,7 +3,15 @@
 <head th:replace="/commons/layout :: head">
 </head>
 <body>
-<header th:replace="/commons/layout :: header_nav_admin"></header>
+<nav class="navbar navbar-expand-lg  navbar-light container-fluid py-3 position-fixed ">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt="logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
 <div class="container-fluid row">
     <div class="py-2 text-center mx-auto">
         <h1 class="py-1 text-warning"> Not Found</h1>

@@ -12,6 +12,8 @@ public class BookingDTO implements Validator {
     private Long id;
     private Long carId;
     private Long customerId;
+    private String startDateStr;
+    private String endDateStr;
     private LocalDate startDate;
     private LocalDate endDate;
     private String cccd;

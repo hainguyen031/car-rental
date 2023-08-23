@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/commons/layout :: head">
+</head>
+<body>
+<header th:replace="/commons/layout :: header_nav_customer"></header>
+
+
+    <div align="center" style="margin-top: 5%" th:each="booking, count : ${bookingDTOPage}" th:unless="${#lists.isEmpty(bookingDTOPage)}">
+        <caption>
+            <h4 th:text="'Booking Information ' + ${count.count}"></h4>
+        </caption>
+        <table class="table" border="1" cellpadding="5" style="border-collapse: collapse; width: 60%">
+            <tr>
+                <th><strong>User ID:</strong></th>
+                <td th:text="${booking.getUser().getUsername()}"></td>
+            </tr>
+<!--            <tr>-->
+<!--                <th><strong>Email:</strong></th>-->
+<!--                <td th:text="${booking.getUserId()}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><strong>Phone:</strong></th>-->
+<!--                <td th:text="${booking.getUserId()()}"></td>-->
+<!--            </tr>-->
+            <tr>
+                <th><strong>CCCD:</strong></th>
+                <td th:text="${booking.getCccd()()}"></td>
+            </tr>
+            <tr>
+                <th><strong>GPLX:</strong></th>
+                <td th:text="${booking.getGplx()()()}"></td>
+            </tr>
+            <tr>
+                <th><strong>Pickup Location:</strong></th>
+                <td th:text="${booking.getPickupLocation()()()}"></td>
+            </tr>
+<!--            <tr>-->
+<!--                <th><strong>Car:</strong></th>-->
+<!--                <td th:text="${booking.getCar().getBrand()} + ' ' + ${booking.getCar().getModel()}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><strong>Rental Price:</strong></th>-->
+<!--                <td th:text="${booking.getRentPrice()}"></td>-->
+<!--            </tr>-->
+            <tr>
+                <th><strong>Rental Date:</strong></th>
+                <td th:text="${booking.getStartDate()}"></td>
+            </tr>
+            <tr>
+                <th><strong>Return Date:</strong></th>
+                <td th:text="${booking.getEndDate()}"></td>
+            </tr>
+<!--            <tr>-->
+<!--                <th><strong>Total Rental Date:</strong></th>-->
+<!--                <td>-->
+<!--                    <%= numberOfDays %>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><strong>Total pay:</strong></th>-->
+<!--                <td>-->
+<!--                    <%= totalAmount %>-->
+<!--                </td>-->
+<!--            </tr>-->
+        </table>
+    </div>
+
+
+
+    <div th:replace="commons/layout :: scroll-to-top"></div>
+<footer th:replace="/commons/layout :: footer"></footer>
+<th:block th:replace="/commons/layout :: script"></th:block>
+
+</body>
+</html>

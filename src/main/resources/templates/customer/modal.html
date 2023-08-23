@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div th:fragment="carDetailModal(car, count)">
@@ -20,7 +22,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal"
                               aria-label="Close"></button>
                   </div>
-                  <div class="modal-body" >
+                  <div class="modal-body" style="overflow-x: inherit;">
                       <!-- Ảnh xe -->
                       <div class="display-container">
                           <!-- Carousel -->
@@ -37,24 +39,24 @@
                               <!-- The slideshow/carousel -->
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                      <img th:src="${car.url}" alt="IMG1" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img th:src="${car.url}" alt="IMG1" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img th:src="${car.url2}" alt="IMG2" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img th:src="${car.url2}" alt="IMG2" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img th:src="${car.url3}" alt="IMG3" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img th:src="${car.url3}" alt="IMG3" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                                   <div class="carousel-item">
-                                      <img th:src="${car.url4}" alt="IMG4" class="d-block" style="width:100%; border-radius: 5%">
+                                      <img th:src="${car.url4}" alt="IMG4" class="d-block" style="width:65%; margin: auto; border-radius: 5%">
                                   </div>
                               </div>
 
                               <!-- Left and right controls/icons -->
-                              <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                              <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" style="margin-left: 15%">
                                   <span class="carousel-control-prev-icon"></span>
                               </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                              <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="margin-right: 15%">
                                   <span class="carousel-control-next-icon"></span>
                               </button>
                           </div>
@@ -62,7 +64,7 @@
                       <!-- Nội dung chi tiết xe -->
                       <div class="container mt-3" style="margin-left: 10%; margin-right: 10%;">
                           <div class="row">
-                              <div class="col-sm-8">
+                              <div class="col-sm-7">
                                   <div class="main-content">
                                       <h4>    <span th:text="${car.brand}"></span>
                                           <span th:text="${car.model}"></span>
@@ -284,12 +286,13 @@
 
 <!--Modal rent car-->
 
-<div  th:fragment="carRentModal(car, count)">
+<div th:fragment="carRentModal(car, count)">
+
     <div class="modal fade" th:id="'carRentModal' + ${count}" tabindex="-1"
          aria-labelledby="'rentCar1' + ${countStat.count}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header" style="margin-top: 6%">
+                <div class="modal-header">
                     <h4 class="modal-title fs-5" th:id="'rentCar1' + ${count}">CAR RENTAL INFORMATION</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -305,32 +308,33 @@
                     <form class="row g-3 justify-content-center" >
                         <div class="col-md-6">
                             <label th:for="startDate">Rental date:</label>
-                            <input type="date" id="startDate" th:name="startDate" required>
+                            <input type="date" id="startDate2" th:name="startDate" required>
                         </div>
 
                         <div class="col-md-6">
                             <label th:for="endDate">Return date:</label>
-                            <input type="date" id="endDate" th:name="endDate" required>
+                            <input type="date" id="endDate2" th:name="endDate" required>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="fullName1" style="width: 20%;">Username</span>
 <!--                            <input type="text" class="form-control" th:placeholder="${user.username}" disabled/>-->
-                            <input type="text" class="form-control" th:placeholder="hellomodal" disabled/>
+                            <input type="text" class="form-control" th:placeholder="${#request.userPrincipal.name}" disabled/>
+                            <input type="hidden" th:value="${#request.userPrincipal.name}" id="cusName" th:name="cusName">
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" style="width: 20%;">CCCD</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   th:aria-describedby="cccd" id="cccd" th:name="cccd"/>
+                                    id="cccd" />
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" style="width: 20%;">GPLX</span>
                             <input type="text" class="form-control" placeholder="Gom 12 chu so"
                                    aria-label="Gom 12 chu so"
-                                   th:aria-describedby="gplx" id="gplx" th:name="gplx"/>
+                                    id="gplx" />
                         </div>
 
                         <div class="input-group mb-3">
@@ -338,17 +342,63 @@
                             <input type="text" class="form-control" placeholder="21k nguyen van troi"
                                    aria-label="21k nguyen van troi"
                                    th:aria-describedby="pickupLocation1" id="pickupLocation1" th:name="pickupLocation1"/>
-                            <input type="hidden" th:value="${car.id}" id="carId" th:name="carId">
+                            <input type="hidden" th:value="${car.id}" id="carId2" th:name="carId">
                         </div>
-                        <button id="rentForm" type="button" class="btn btn-primary">CONFIRM RENTING</button>
+<!--                        <button type="submit" class="btn btn-primary">CONFIRM RENTING</button>-->
+<!--                        <script>-->
+<!--                            function handleClick(){-->
+<!--                                console.log("hello world")-->
+<!--                            }-->
+<!--                        </script>-->
+                        <button th:onclick="handleClick()" id="btnConfirm" type="button" class="btn btn-primary">CONFIRM RENTING</button>
                     </form>
                 </div>
-<!--                <div class="modal-footer">-->
-<!--                </div>-->
             </div>
         </div>
+<!--        <script th:src="@{/js/customer2.js}"></script>-->
+        <script>
+            function handleClick() {
+
+                console.log("hello")
+
+                let cusName = $('#cusName').val();
+                let carId = $('#carId').val();
+                let cccd = $('#cccd').val();
+                let gplx = $('#gplx').val();
+                let pickupLocation = $('#pickupLocation1').val();
+                let startDateStr = $('#startDate2').val();
+                let endDateStr = $('#endDate2').val();
+                let rentData = {
+                    carId : carId,
+                    customerId : cusId,
+                    cccd : cccd,
+                    gplx : gplx,
+                    pickupLocation : pickupLocation,
+                    startDate : new Date(startDateStr),
+                    endDate : new Date(endDateStr)
+                };
+                console.log(rentData);
+                $.ajax({
+                    type: 'POST',
+                    url: '/customerRes/rent-car',
+                    data: JSON.stringify(rentData),
+                    contentType: 'application/json',
+                    // dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function () {
+                        alert('Error rent cars. Please try again later.');
+                    }
+                });
+            }
+
+
+
+        </script>
     </div>
 </div>
-<script th:src="@{/js/customer.js}"></script>
+
+
 </body>
 </html>

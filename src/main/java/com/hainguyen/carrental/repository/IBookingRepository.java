@@ -24,6 +24,7 @@ public interface IBookingRepository extends JpaRepository<Booking, Long> {
 //    List<Booking> findAllByCustomerId(Long userID);
 
     List<Booking> findByUser(User user);
+    Page<Booking> findByUser(User user, Pageable pageable);
     List<Booking> findByCar(Car car);
     Page<Booking> findByCar(Car car, Pageable pageable);
 }

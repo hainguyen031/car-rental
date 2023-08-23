@@ -1,6 +1,7 @@
 package com.hainguyen.carrental.controller.api;
 
 import com.hainguyen.carrental.dto.BookingDTO;
+import com.hainguyen.carrental.dto.BookingDTOResponse;
 import com.hainguyen.carrental.dto.CarDTO;
 import com.hainguyen.carrental.dto.SearchCarDTO;
 import com.hainguyen.carrental.exception.ObjectNotFound;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -76,8 +78,13 @@ public class RestCustomerController {
 //                                     @RequestParam String cccd,
 //                                     @RequestParam String gplx,
 //                                     @RequestParam String pickupLocation,
-//                                     @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate rentalDate,
-//                                     @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate returnDate) {
+//                                     @RequestParam String rentalDateStr,
+//                                     @RequestParam String returnDateStr) {
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+//        LocalDate rentalDate = LocalDate.parse(rentalDateStr, formatter);
+//        LocalDate returnDate = LocalDate.parse(returnDateStr, formatter);
+//
 //        boolean success = iCarService.rentCar(userID, carID, cccd, gplx, pickupLocation, rentalDate, returnDate);
 //        if (success) {
 //            return new ResponseEntity<>("Car rented successfully.", HttpStatus.OK);
@@ -93,8 +100,8 @@ public class RestCustomerController {
                 bookingDTO.getCccd(),
                 bookingDTO.getGplx(),
                 bookingDTO.getPickupLocation(),
-                bookingDTO.getStartDate(),
-                bookingDTO.getEndDate());
+                LocalDate.parse(bookingDTO.getStartDateStr()),
+                LocalDate.parse(bookingDTO.getEndDateStr()));
         if (success) {
             return new ResponseEntity<>("Car rented successfully.", HttpStatus.OK);
         } else {
@@ -102,9 +109,9 @@ public class RestCustomerController {
         }
     }
 
-    @GetMapping("/history-booking")
-    public ResponseEntity<?> getBookingHistory(@RequestParam Long customerId) {
-        List<BookingDTO> bookingList = iBookingService.getBookingHistory(customerId);
+    @GetMapping("/history-booking/{customerId}")
+    public ResponseEntity<?> getBookingHistory(@PathVariable Long customerId) {
+        List<BookingDTOResponse> bookingList = iBookingService.getBookingHistory(customerId);
         return new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/commons/layout :: head">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg  navbar-light container-fluid py-3 position-fixed ">
+  <div class="container">
+    <a class="navbar-brand" href="#"><img src="images/logo.png" alt="logo"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="container-fluid row">
+  <div class="py-2 text-center mx-auto">
+    <h1 class="py-1 text-warning"> Not Found</h1>
+    <hr class="" style="margin:auto;width:50%">
+    <br>
+    <br>
+    <p style="margin-top: 200px">
+      You don't have permission to access this site.</p>
+    <p>
+      Please contact the administrator!
+    </p>
+  </div>
+</div>
+<div style="margin-top: 200px">
+  <footer th:replace="/commons/layout :: footer" ></footer>
+</div>
+
+<!--<th:block th:replace="/commons/layout :: script"></th:block>-->
+</body>
+</html>
